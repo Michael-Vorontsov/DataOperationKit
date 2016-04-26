@@ -31,11 +31,25 @@ class NetwrokOperationTests: XCTestCase {
     let expct:XCTestExpectation = self.expectationWithDescription("Awaiting request")
     
     manager.addOperations([operation]) { (success, results, errors) -> Void in
+      completed = true
       
-      //TODO: Add network condition error check
+      // If no connection error - break
+      if let errors = errors,
+        let error = errors.last as? DataRetrievalOperationError {
+        
+        switch error {
+        case .NetworkError(let wrappedError):
+          if wrappedError?.code == NSURLErrorNotConnectedToInternet {
+            print("No internet connection - network operation test skipped!")
+            expct.fulfill()
+            return
+          }
+        default:break
+        }
+      }
+      
       XCTAssertTrue(success)
       XCTAssertNil(errors)
-      XCTAssertFalse(completed)
       XCTAssertGreaterThan(results.count, 1)
       
       if results.count > 1 {
@@ -53,7 +67,6 @@ class NetwrokOperationTests: XCTestCase {
       XCTAssertEqual(manager.operations.count, 0)
       
       XCTAssertEqual(operation.stage, OperationStage.Completed)
-      completed = true
       expct.fulfill()
     }
     
