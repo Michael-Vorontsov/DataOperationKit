@@ -1,6 +1,6 @@
 //
 //  CoreDataManagerTests.swift
-//  SwiftWeather
+//  DataOperationKit
 //
 //  Created by Mykhailo Vorontsov on 05/04/2016.
 //  Copyright © 2016 Mykhailo Vorontsov. All rights reserved.
@@ -43,7 +43,7 @@ class CoreDataManagerTests: XCTestCase {
 //    
 //    let persitentStore  = persistentStoreCoordinator.persistentStores.first;
 //    
-//    XCTAssertEqual(persitentStore?.URL?.lastPathComponent, "SwiftWeatherDB.sqlite")
+//    XCTAssertEqual(persitentStore?.URL?.lastPathComponent, "DataOperationKitDB.sqlite")
 //    
 //    XCTAssertEqual(dataManager, CoreDataManager.sharedManager)
 //    XCTAssertNotEqual(CoreDataManager(), CoreDataManager.sharedManager)
@@ -119,7 +119,7 @@ class CoreDataManagerTests: XCTestCase {
     let fileManager = NSFileManager.defaultManager()
     
     let url = NSFileManager.applicationDocumentsDirectory.URLByAppendingPathComponent("TestDB-Wipe.sqlite")
-    let filePath = url.relativePath!
+    let filePath = url!.relativePath!
     XCTAssertNotNil(filePath)
     XCTAssertFalse(fileManager.fileExistsAtPath(filePath))
 

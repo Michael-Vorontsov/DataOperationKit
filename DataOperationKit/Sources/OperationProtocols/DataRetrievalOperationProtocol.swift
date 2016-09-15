@@ -1,6 +1,6 @@
 //
 //  DataRetrievalOperationProtocol.swift
-//  SwiftWeather
+//  DataOperationKit
 //
 //  Created by Mykhailo Vorontsov on 08/04/2016.
 //  Copyright © 2016 Mykhailo Vorontsov. All rights reserved.
@@ -33,6 +33,8 @@ public enum DataRetrievalOperationError: ErrorType {
   case InvalidParameter(parameterName:String?)
   case ServerResponse(errorCode:Int, errorResponse:NSHTTPURLResponse, responseData:NSData?)
   case InvalidDataForKey(key:String, value:AnyObject?)
+  case NoData
+//  case NetworkConnectionError(error:NSError?)
   case NetworkError(error:NSError?)
   case CoreDataError(error:NSError?)
   case InternalError(error:ErrorType?)

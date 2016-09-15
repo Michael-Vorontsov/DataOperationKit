@@ -6,7 +6,7 @@
 //  Copyright © 2016 Mykhailo Vorontsov. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import Foundation;
 
 //! Project version number for DataOperationKit.
 FOUNDATION_EXPORT double DataOperationKitVersionNumber;

@@ -1,12 +1,12 @@
 //
 //  NetworkDataRetrievalOperation.swift
-//  SwiftWeather
+//  DataOperationKit
 //
 //  Created by Mykhailo Vorontsov on 29/03/2016.
 //  Copyright © 2016 Mykhailo Vorontsov. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 private let Consts = (
   networkTimeout : 60.0,
@@ -14,6 +14,7 @@ private let Consts = (
     generalDelimitersToEncode : ":#[]@", // does not include "?" or "/" due to RFC 3986 - Section 3.4
     subDelimitersToEncode : "!$&'()*+,;="
   ),
+  
   headerContentTypeKey : "Content-Type"
 )
 
@@ -25,12 +26,20 @@ public class NetworkDataRetrievalOperation: DataRetrievalOperation, NetworkDataR
   public var requestEndPoint: String? = nil
   public var requestPath: String? = nil
   
+  public var cache:Bool? = false
+  
   public var requestMethod: NetworkRequestMethod = .GET
   public var requestParametersEncoding: NetworkParameterEncoding = .JSON
   
-  public lazy var requestParameters: [String : AnyObject] = {return [String : AnyObject]()}()
-  public lazy var requestHeaders: [String : String] = {return [String : String]()}()
+  public lazy var requestParameters: [String : AnyObject]! = {
+    return [String : AnyObject]()
+  }()
   
+  public lazy var requestHeaders: [String : AnyObject]! = {
+    return [String : AnyObject]()
+  }()
+  
+
   public var response: NSURLResponse? = nil
   
   func encodeParameters(parameters:[String : AnyObject]) -> String {
@@ -62,7 +71,7 @@ public class NetworkDataRetrievalOperation: DataRetrievalOperation, NetworkDataR
     }
     // Add path if any
     if let path = requestPath {
-      url = url.URLByAppendingPathComponent(path)
+      url = url.URLByAppendingPathComponent(path)!
     }
     
     let method = requestMethod
@@ -81,9 +90,15 @@ public class NetworkDataRetrievalOperation: DataRetrievalOperation, NetworkDataR
     //MARK: Construct request
     let theRequest = NSMutableURLRequest(URL:url)
     theRequest.HTTPMethod = method.rawValue
-    var headers = requestHeaders ?? [String : String]()
+    
+//    var headers = requestHeaders
+    var headers = [String : AnyObject]()
+    requestHeaders = headers
     headers[Consts.headerContentTypeKey] = requestParametersEncoding.rawValue
     for (key, value) in headers {
+      guard let value = value as? String else {
+        continue
+      }
       theRequest.addValue(value, forHTTPHeaderField: key)
     }
     
@@ -114,11 +129,11 @@ public class NetworkDataRetrievalOperation: DataRetrievalOperation, NetworkDataR
       self.response = response
       self.data = data
       
-      //// For debug purpose: print string representation of response data, if any. Uncoment code bellow.
-      //      if let data = data {
-      //        let stringRepresentation = NSString(data: data, encoding: 0)
-      //        print("Request:\(self.task?.originalRequest)\nResponse:\(response)\nData:\(stringRepresentation)")
-      //      }
+//      // For debug purpose: print string representation of response data, if any. Uncoment code bellow.
+//            if let data = data {
+//              let stringRepresentation = NSString(data: data, encoding: 0)
+//              print("Request:\(self.task?.originalRequest)\nResponse:\(response)\nData:\(stringRepresentation)")
+//            }
       
       // Process possible network layer errors:
       if let nserror = nserror {

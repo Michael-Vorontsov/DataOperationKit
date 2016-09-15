@@ -1,6 +1,6 @@
 //
 //  HTTPStubsNetworkOperationTests.swift
-//  SwiftWeather
+//  DataOperationKit
 //
 //  Created by Mykhailo Vorontsov on 07/04/2016.
 //  Copyright © 2016 Mykhailo Vorontsov. All rights reserved.
@@ -239,8 +239,8 @@ class HTTPStubsNetworkOperationTests: XCTestCase {
   func testGetOperationParams() {
     stubMock { (request) in
       let requestString = request.URL!.absoluteString
-      XCTAssertTrue(requestString.containsString("key=value"))
-      XCTAssertTrue(requestString.containsString("another=1"))
+      XCTAssertTrue(requestString!.containsString("key=value"))
+      XCTAssertTrue(requestString!.containsString("another=1"))
       XCTAssertEqual(request.HTTPMethod, "GET")
       if let headers = request.allHTTPHeaderFields {
         XCTAssertEqual(headers["header_key"], "header_value")
@@ -269,8 +269,8 @@ class HTTPStubsNetworkOperationTests: XCTestCase {
     stubMock { (request) in
       let requestString = request.URL!.absoluteString
       // Keys shouldn't contains keys in request string
-      XCTAssertFalse(requestString.containsString("key=value"))
-      XCTAssertFalse(requestString.containsString("another=1"))
+      XCTAssertFalse(requestString!.containsString("key=value"))
+      XCTAssertFalse(requestString!.containsString("another=1"))
       
       XCTAssertEqual(request.HTTPMethod, "POST")
       if let headers = request.allHTTPHeaderFields {

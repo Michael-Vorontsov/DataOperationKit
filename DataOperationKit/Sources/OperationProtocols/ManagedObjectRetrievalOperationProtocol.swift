@@ -1,6 +1,6 @@
 //
 //  ManagedObjectRetrievalOperationProtocol.swift
-//  SwiftWeather
+//  DataOperationKit
 //
 //  Created by Mykhailo Vorontsov on 08/04/2016.
 //  Copyright © 2016 Mykhailo Vorontsov. All rights reserved.

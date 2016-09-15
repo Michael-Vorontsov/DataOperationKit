@@ -1,6 +1,6 @@
 //
 //  CoreDataManager.swift
-//  SwiftWeather
+//  DataOperationKit
 //
 //  Created by Mykhailo Vorontsov on 18/03/2016.
 //  Copyright © 2016 Mykhailo Vorontsov. All rights reserved.
@@ -132,7 +132,7 @@ public class CoreDataManager: NSObject {
       
       // If error - try to delete database and create it from scratch
       do {
-        try NSFileManager.defaultManager().removeItemAtURL(url)
+        try NSFileManager.defaultManager().removeItemAtURL(url!)
         try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
       } catch {
         print("Error occured while trying recreate database")

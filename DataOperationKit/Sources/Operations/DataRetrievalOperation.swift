@@ -1,6 +1,6 @@
 //
 //  DataRetrievalOperation.swift
-//  SwiftWeather
+//  DataOperationKit
 //
 //  Created by Mykhailo Vorontsov on 18/03/2016.
 //  Copyright © 2016 Mykhailo Vorontsov. All rights reserved.
